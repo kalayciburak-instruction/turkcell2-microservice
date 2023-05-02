@@ -17,17 +17,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UpdateCarRequest {
     @NotNull
-    @NotBlank
     private UUID modelId;
     @Min(value = 2000)
     // TODO: NotFuture custom annotation
     private int modelYear;
-    @NotNull
     @NotBlank
     // TODO: Add Regex
     private String plate;
     @NotNull
-    @NotBlank
     private State state;
     @Min(value = 1)
     private double dailyPrice;

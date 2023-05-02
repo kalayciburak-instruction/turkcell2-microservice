@@ -16,12 +16,10 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreateCarRequest {
     @NotNull
-    @NotBlank
     private UUID modelId;
     @Min(value = 2000)
     // TODO: NotFuture custom annotation
     private int modelYear;
-    @NotNull
     @NotBlank
     // TODO: Add Regex
     private String plate;
