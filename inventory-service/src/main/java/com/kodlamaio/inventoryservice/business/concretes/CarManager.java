@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.business.concretes;
 
+import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import com.kodlamaio.inventoryservice.business.abstracts.CarService;
 import com.kodlamaio.inventoryservice.business.dto.requests.create.CreateCarRequest;
 import com.kodlamaio.inventoryservice.business.dto.requests.update.UpdateCarRequest;
@@ -7,6 +8,7 @@ import com.kodlamaio.inventoryservice.business.dto.responses.create.CreateCarRes
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetAllCarsResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.get.GetCarResponse;
 import com.kodlamaio.inventoryservice.business.dto.responses.update.UpdateCarResponse;
+import com.kodlamaio.inventoryservice.repository.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,18 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class CarManager implements CarService {
-    // TODO: Update methods
+    private final CarRepository repository;
+    private final ModelMapperService mapper;
+
     @Override
     public List<GetAllCarsResponse> getAll() {
-        return null;
+        var cars = repository.findAll();
+        var response = cars
+                .stream()
+                .map(car -> mapper.forResponse().map(car, GetAllCarsResponse.class))
+                .toList();
+
+        return response;
     }
 
     @Override
