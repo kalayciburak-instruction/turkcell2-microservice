@@ -16,7 +16,7 @@ eureka:
   instance:
     metadata-map:
       serviceId: inventory-service
-    instance-id: ${spring.application.name}:${instanceId:${random.value}}
+    instance-id: ${spring.application.name}:${random.value}
     prefer-ip-address: true
 server:
   port: 9010
