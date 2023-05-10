@@ -1,6 +1,8 @@
 package com.kodlamaio.inventoryservice.business.kafka.producer;
 
+import com.kodlamaio.commonpackage.events.BrandDeletedEvent;
 import com.kodlamaio.commonpackage.events.CarCreatedEvent;
+import com.kodlamaio.commonpackage.events.CarDeletedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -20,6 +22,26 @@ public class InventoryProducer {
         Message<CarCreatedEvent> message = MessageBuilder
                 .withPayload(event)
                 .setHeader(KafkaHeaders.TOPIC, "car-created")
+                .build();
+
+        kafkaTemplate.send(message);
+    }
+
+    public void sendMessage(CarDeletedEvent event) {
+        log.info(String.format("car-deleted event => %s", event.toString()));
+        Message<CarDeletedEvent> message = MessageBuilder
+                .withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC, "car-deleted")
+                .build();
+
+        kafkaTemplate.send(message);
+    }
+
+    public void sendMessage(BrandDeletedEvent event) {
+        log.info(String.format("brand-deleted event => %s", event.toString()));
+        Message<BrandDeletedEvent> message = MessageBuilder
+                .withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC, "brand-deleted")
                 .build();
 
         kafkaTemplate.send(message);
