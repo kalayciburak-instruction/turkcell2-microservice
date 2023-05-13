@@ -1,4 +1,4 @@
-package com.kodlamaio.commonpackage.events;
+package com.kodlamaio.commonpackage.events.inventory;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
