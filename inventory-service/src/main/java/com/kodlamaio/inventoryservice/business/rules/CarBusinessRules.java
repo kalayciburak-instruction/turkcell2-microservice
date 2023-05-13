@@ -1,5 +1,6 @@
 package com.kodlamaio.inventoryservice.business.rules;
 
+import com.kodlamaio.commonpackage.utils.exceptions.BusinessException;
 import com.kodlamaio.inventoryservice.repository.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,7 @@ public class CarBusinessRules {
 
     public void checkIfCarExists(UUID id) {
         if (!repository.existsById(id)) {
-            // TODO: BusinessException
-            throw new RuntimeException("CAR_NOT_EXISTS");
+            throw new BusinessException("CAR_NOT_EXISTS");
         }
     }
 }
