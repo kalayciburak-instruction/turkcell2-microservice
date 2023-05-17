@@ -16,6 +16,10 @@ spring:
       bootstrap-servers: http://192.168.1.102:9092
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 eureka:
   client:
     fetch-registry: true
