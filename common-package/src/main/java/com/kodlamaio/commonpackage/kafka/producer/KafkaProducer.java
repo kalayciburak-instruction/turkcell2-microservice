@@ -1,6 +1,6 @@
-package com.kodlamaio.rentalservice.business.kafka.producer;
+package com.kodlamaio.commonpackage.kafka.producer;
 
-import com.kodlamaio.commonpackage.events.rental.RentalCreatedEvent;
+import com.kodlamaio.commonpackage.events.Event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RentalProducer {
+public class KafkaProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendMessage(RentalCreatedEvent event) {
-        log.info(String.format("rental-created event => %s", event.toString()));
-        Message<RentalCreatedEvent> message = MessageBuilder
+    public <T extends Event> void sendMessage(T event, String topic) {
+        log.info(String.format("%s event => %s", topic, event.toString()));
+        Message<T> message = MessageBuilder
                 .withPayload(event)
-                .setHeader(KafkaHeaders.TOPIC, "rental-created")
+                .setHeader(KafkaHeaders.TOPIC, topic)
                 .build();
 
         kafkaTemplate.send(message);
