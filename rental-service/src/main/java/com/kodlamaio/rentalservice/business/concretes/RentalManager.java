@@ -1,6 +1,7 @@
 package com.kodlamaio.rentalservice.business.concretes;
 
 import com.kodlamaio.commonpackage.events.rental.RentalCreatedEvent;
+import com.kodlamaio.commonpackage.events.rental.RentalDeletedEvent;
 import com.kodlamaio.commonpackage.kafka.producer.KafkaProducer;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import com.kodlamaio.rentalservice.business.abstracts.RentalService;
@@ -62,10 +63,6 @@ public class RentalManager implements RentalService {
         return response;
     }
 
-    private void sendKafkaRentalCreatedEvent(UUID carId) {
-        producer.sendMessage(new RentalCreatedEvent(carId), "rental-created");
-    }
-
     @Override
     public UpdateRentalResponse update(UUID id, UpdateRentalRequest request) {
         rules.checkIfRentalExists(id);
@@ -80,10 +77,20 @@ public class RentalManager implements RentalService {
     @Override
     public void delete(UUID id) {
         rules.checkIfRentalExists(id);
+        sendKafkaRentalDeletedEvent(id);
         repository.deleteById(id);
     }
 
     private double getTotalPrice(Rental rental) {
         return rental.getDailyPrice() * rental.getRentedForDays();
+    }
+
+    private void sendKafkaRentalCreatedEvent(UUID carId) {
+        producer.sendMessage(new RentalCreatedEvent(carId), "rental-created");
+    }
+
+    private void sendKafkaRentalDeletedEvent(UUID id) {
+        var carId = repository.findById(id).orElseThrow().getCarId();
+        producer.sendMessage(new RentalDeletedEvent(carId), "rental-deleted");
     }
 }
