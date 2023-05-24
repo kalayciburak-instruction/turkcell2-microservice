@@ -7,7 +7,5 @@ spring:
         default-label: master
         git:
           uri: https://github.com/kalayciburak-instruction/config-server-t2
-  profiles:
-    active: dev
 server:
   port: 8888
