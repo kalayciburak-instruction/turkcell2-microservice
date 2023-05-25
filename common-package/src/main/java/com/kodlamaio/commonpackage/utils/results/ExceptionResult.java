@@ -13,7 +13,7 @@ public class ExceptionResult<T> {
     private T message;
 
     public ExceptionResult(String type, T message) {
-        timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now();
         this.type = type;
         this.message = message;
     }

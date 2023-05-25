@@ -14,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class GetRentalResponse {
     private UUID id;
+    private UUID customerId;
     private UUID carId;
     private double dailyPrice;
     private double totalPrice;

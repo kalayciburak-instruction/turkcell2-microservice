@@ -42,7 +42,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT) // 409
-    public ExceptionResult<Object> handleDataIntegrityViolation(DataIntegrityViolationException exception) {
+    public ExceptionResult<Object> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
         return new ExceptionResult<>(ExceptionTypes.Exception.DataIntegrityViolation, exception.getMessage());
     }
 

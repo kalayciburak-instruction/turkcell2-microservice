@@ -32,3 +32,4 @@ public class UpdateCarRequest {
     @Min(value = 1)
     private double dailyPrice;
 }
+

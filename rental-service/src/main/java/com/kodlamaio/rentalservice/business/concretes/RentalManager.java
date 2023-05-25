@@ -2,7 +2,8 @@ package com.kodlamaio.rentalservice.business.concretes;
 
 import com.kodlamaio.commonpackage.events.rental.RentalCreatedEvent;
 import com.kodlamaio.commonpackage.events.rental.RentalDeletedEvent;
-import com.kodlamaio.commonpackage.kafka.producer.KafkaProducer;
+import com.kodlamaio.commonpackage.utils.dto.CreateRentalPaymentRequest;
+import com.kodlamaio.commonpackage.utils.kafka.producer.KafkaProducer;
 import com.kodlamaio.commonpackage.utils.mappers.ModelMapperService;
 import com.kodlamaio.rentalservice.business.abstracts.RentalService;
 import com.kodlamaio.rentalservice.business.dto.requests.CreateRentalRequest;
@@ -14,7 +15,7 @@ import com.kodlamaio.rentalservice.business.dto.responses.UpdateRentalResponse;
 import com.kodlamaio.rentalservice.business.rules.RentalBusinessRules;
 import com.kodlamaio.rentalservice.entities.Rental;
 import com.kodlamaio.rentalservice.repository.RentalRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class RentalManager implements RentalService {
     private final RentalRepository repository;
     private final ModelMapperService mapper;
@@ -56,6 +57,12 @@ public class RentalManager implements RentalService {
         rental.setId(null);
         rental.setTotalPrice(getTotalPrice(rental));
         rental.setRentedAt(LocalDate.now());
+
+        var paymentRequest = new CreateRentalPaymentRequest();
+        mapper.forRequest().map(request.getInfo(), paymentRequest);
+        paymentRequest.setPrice(getTotalPrice(rental));
+        rules.ensurePayment(paymentRequest);
+
         repository.save(rental);
         sendKafkaRentalCreatedEvent(request.getCarId());
         var response = mapper.forResponse().map(rental, CreateRentalResponse.class);
@@ -68,6 +75,7 @@ public class RentalManager implements RentalService {
         rules.checkIfRentalExists(id);
         var rental = mapper.forRequest().map(request, Rental.class);
         rental.setId(id);
+        rental.setTotalPrice(getTotalPrice(rental));
         repository.save(rental);
         var response = mapper.forResponse().map(rental, UpdateRentalResponse.class);
 

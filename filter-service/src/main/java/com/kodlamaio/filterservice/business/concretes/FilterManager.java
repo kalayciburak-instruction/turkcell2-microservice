@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class FilterManager implements FilterService {
     private final FilterRepository repository;
-    private ModelMapperService mapper;
+    private final ModelMapperService mapper;
 
     @Override
     public List<GetAllFiltersResponse> getAll() {
@@ -30,7 +30,7 @@ public class FilterManager implements FilterService {
     }
 
     @Override
-    public GetFilterResponse getById(String id) {
+    public GetFilterResponse getById(UUID id) {
         var filter = repository.findById(id).orElseThrow();
         var response = mapper.forResponse().map(filter, GetFilterResponse.class);
 
@@ -43,7 +43,7 @@ public class FilterManager implements FilterService {
     }
 
     @Override
-    public void delete(String id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
     }
 

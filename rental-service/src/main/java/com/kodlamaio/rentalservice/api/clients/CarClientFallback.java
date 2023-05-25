@@ -12,6 +12,6 @@ public class CarClientFallback implements CarClient {
     @Override
     public ClientResponse checkIfCarAvailable(UUID carId) {
         log.info("INVENTORY SERVICE IS DOWN!");
-        throw new RuntimeException("INVENTORY-SERVICE NOT AVAILABLE RIGHT NOW!");
+        throw new RuntimeException("INVENTORY SERVICE IS DOWN!");
     }
 }

@@ -17,6 +17,7 @@ import java.util.UUID;
 public class UpdateRentalRequest {
     @NotNull
     private UUID carId;
+    private UUID customerId;
     @Min(1)
     private double dailyPrice;
     @Min(1)

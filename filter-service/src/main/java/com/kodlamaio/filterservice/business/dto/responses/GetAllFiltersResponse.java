@@ -7,8 +7,8 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetAllFiltersResponse {

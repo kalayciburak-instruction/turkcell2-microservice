@@ -19,8 +19,8 @@ services:
     volumes:
       - mongodb_data:/data/db
 
-  inventorydb:
-    container_name: inventorydb-t2
+  maintenancedb:
+    container_name: maintenancedb-t2
     image: mysql
     ports:
       - "3306:3306"
@@ -29,9 +29,22 @@ services:
       - MYSQL_TCP_PORT=3306
       - VIRTUAL_PORT=3306
     volumes:
-      - inventorydb:/data/db
+      - maintenancedb_data:/data/db
+
+  paymentdb:
+    container_name: paymentdb-t2
+    image: mysql
+    ports:
+      - "3307:3307"
+    environment:
+      - MYSQL_ROOT_PASSWORD=12345
+      - MYSQL_TCP_PORT=3307
+      - VIRTUAL_PORT=3307
+    volumes:
+      - paymentdb_data:/data/db
 
 volumes:
   kafka_data:
   mongodb_data:
-  inventorydb:
+  maintenancedb_data:
+  paymentdb_data:

@@ -20,4 +20,3 @@ public class UpdateCarResponse {
     private State state;
     private double dailyPrice;
 }
-

@@ -15,4 +15,3 @@ import java.util.UUID;
 public class RentalCreatedEvent implements Event {
     private UUID carId;
 }
-

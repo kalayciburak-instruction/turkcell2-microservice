@@ -11,8 +11,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication(scanBasePackages = {Paths.ConfigurationBasePackage, Paths.Rental.ServiceBasePackage})
 public class RentalServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(RentalServiceApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(RentalServiceApplication.class, args);
+	}
 
 }

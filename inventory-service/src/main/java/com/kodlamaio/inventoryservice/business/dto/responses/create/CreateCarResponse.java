@@ -20,3 +20,4 @@ public class CreateCarResponse {
     private State state;
     private double dailyPrice;
 }
+
