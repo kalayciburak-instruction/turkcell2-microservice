@@ -32,11 +32,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.kodlamaio</groupId>
-            <artifactId>common-package</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>io.github.kalayciburak-instruction</groupId>
+            <artifactId>common-package-t2</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>snapshot-repo</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
